@@ -72,9 +72,6 @@
 
 
 
-/*-----------------------------------*\
-  #RESET
-\*-----------------------------------*/
 
 *,
 *::before,
@@ -149,10 +146,6 @@ body.active { overflow: hidden; }
 
 
 
-
-/*-----------------------------------*\
-  #REUSED STYLE
-\*-----------------------------------*/
 
 .container { padding-inline: 15px; }
 
@@ -281,11 +274,6 @@ body.active { overflow: hidden; }
 
 
 
-
-/*-----------------------------------*\
-  #LOADING
-\*-----------------------------------*/
-
 .loading-container {
   position: fixed;
   top: 0;
@@ -325,10 +313,6 @@ body.active { overflow: hidden; }
 
 
 
-
-/*-----------------------------------*\
-  #HEADER
-\*-----------------------------------*/
 
 .overlay,
 .header .btn { display: none; }
@@ -420,10 +404,6 @@ body.active { overflow: hidden; }
 
 
 
-/*-----------------------------------*\
-  #HERO
-\*-----------------------------------*/
-
 .hero { padding-block-start: calc(var(--section-padding) + 5px); }
 
 .hero .container {
@@ -439,9 +419,6 @@ body.active { overflow: hidden; }
 
 
 
-/*-----------------------------------*\
-  #INSTRUCTION
-\*-----------------------------------*/
 
 .instruction {
   padding-block-start: 0;
@@ -463,117 +440,10 @@ body.active { overflow: hidden; }
 
 
 
-/*-----------------------------------*\
-  #TOP RESTAURANT
-\*-----------------------------------*/
-
-.restaurant-card { padding: 20px; }
-
-.restaurant-card .card-icon {
-  width: 100px;
-  border-radius: var(--radius-15);
-  overflow: hidden;
-  margin-block-end: 20px;
-}
-
-.restaurant-card .rating-wrapper { margin-block-start: 5px; }
-
-.restaurant-card .card-meta-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.restaurant-card .card-meta {
-  color: var(--marigold);
-  font-size: var(--fs-11);
-  border: 1px solid;
-  padding: 5px 15px;
-  border-radius: var(--radius-10);
-  margin-block: 15px 20px;
-  transition: var(--transition-1);
-}
-
-.restaurant-card .card-meta:is(:hover, :focus-visible) {
-  background-color: var(--marigold);
-  color: var(--white);
-}
-
-.top-restaurant .btn {
-  margin-inline: auto;
-  margin-block-start: 40px;
-}
 
 
 
 
-
-/*-----------------------------------*\
-  #CTA
-\*-----------------------------------*/
-
-.cta .container {
-  display: grid;
-  gap: 60px;
-}
-
-.cta .section-text { margin-block: 20px 30px; }
-
-
-
-
-
-/*-----------------------------------*\
-  #STATS
-\*-----------------------------------*/
-
-.stats .section-title { margin-block-end: 0; }
-
-.stats-item {
-  background-color: var(--white);
-  padding: 40px;
-  box-shadow: var(--shadow-1);
-  border-radius: var(--radius-10);
-  text-align: center;
-}
-
-.stats-item .span {
-  color: var(--marigold);
-  font-size: var(--fs-1);
-  font-weight: var(--fw-700);
-  line-height: 1;
-}
-
-
-
-
-
-/*-----------------------------------*\
-  #TESTIMONIALS
-\*-----------------------------------*/
-
-.testi .container {
-  display: grid;
-  gap: 80px;
-}
-
-.testi-text {
-  font-size: var(--fs-10);
-  margin-block: 25px 20px;
-}
-
-.testi .wrapper {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.testi .author-title {
-  color: var(--jet);
-  font-size: var(--fs-10);
-  font-weight: var(--fw-500);
-  margin-block-end: 5px;
-}
 
 
 
@@ -613,33 +483,6 @@ body.active { overflow: hidden; }
   left: 20px;
 }
 
-
-
-
-
-/*-----------------------------------*\
-  #NEWSLETTER
-\*-----------------------------------*/
-
-.newsletter .container {
-  display: grid;
-  gap: 40px;
-}
-
-.newsletter .section-title { margin-block-end: 30px; }
-
-.newsletter .input-field {
-  background-color: var(--white);
-  padding: 15px 30px;
-  border-radius: var(--radius-10);
-  box-shadow: var(--shadow-2);
-  margin-block-end: 20px;
-  outline: none;
-}
-
-.newsletter .input-field:focus { box-shadow: inset 0 0 0 2px var(--marigold); }
-
-.newsletter .btn ion-icon { --ionicon-stroke-width: 50px; }
 
 
 
@@ -719,35 +562,18 @@ body.active { overflow: hidden; }
 
 
 
-/*-----------------------------------*\
-  #MEDIA QUERIES
-\*-----------------------------------*/
 
-/**
- * responsive for large than 575px screen
- */
+/**Media Query**/
 
 @media (min-width: 575px) {
 
-  /**
-   * CUSTOM PROPERTY
-   */
 
   :root {
 
-    /**
-     * typography
-     */
 
     --fs-6: 4.2rem;
 
   }
-
-
-
-  /**
-   * REUSED STYLE
-   */
 
   .container {
     max-width: 550px;
@@ -761,9 +587,7 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * HERO
-   */
+
 
   .hero-banner { position: relative; }
 
@@ -786,9 +610,7 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * INSTRUCTION
-   */
+ 
 
   .instruction-card .card-banner {
     max-width: max-content;
@@ -797,9 +619,6 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * STATS
-   */
 
   .stats-item {
     display: flex;
@@ -810,9 +629,6 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * PARTNERSHIP
-   */
 
   .partnership-card .card-content { left: 40px; }
 
@@ -824,25 +640,16 @@ body.active { overflow: hidden; }
 
 
 
-/**
- * responsive for large than 768px screen
- */
-
 @media (min-width: 768px) {
 
-  /**
-   * REUSED STYLE
-   */
-
+ 
   .container { max-width: 720px; }
 
   .grid-list { grid-template-columns: 1fr 1fr; }
 
 
 
-  /**
-   * HEADER
-   */
+
 
   .navbar {
     max-width: 428px;
@@ -870,9 +677,6 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * TOP RESTAURANT, STATS
-   */
 
   :is(.top-restaurant, .stats) .grid-list { align-items: center; }
 
@@ -882,23 +686,15 @@ body.active { overflow: hidden; }
 
 
 
-/**
- * responsive for large than 992px screen
- */
-
 @media (min-width: 992px) {
 
-  /**
-   * REUSED STYLE
-   */
+ 
 
   .container { max-width: 960px; }
 
   
 
-  /**
-   * HERO
-   */
+
 
   .hero .container {
     grid-template-columns: 1fr 1fr;
@@ -915,9 +711,7 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * INSTRUCTION
-   */
+
 
   .instruction .section-text {
     max-width: 60ch;
@@ -931,21 +725,11 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * CTA, TESTIMONIALS, NEWSLETTER
-   */
+
+
+
+
   
-  :is(.cta, .testi, .newsletter) .container {
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-  }
-
-
-
-  /**
-   * FOOTER
-   */
-
   .footer-top { grid-template-columns: 1fr 0.5fr 1fr; }
 
 }
@@ -954,21 +738,15 @@ body.active { overflow: hidden; }
 
 
 
-/**
- * responsive for large than 1200px screen
- */
+
 
 @media (min-width: 1200px) {
 
-  /**
-   * CUSTOM PROPERTY
-   */
+
 
   :root {
 
-    /**
-     * typography
-     */
+  
 
     --fs-6: 4.8rem;
 
@@ -976,17 +754,12 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * REUSED STYLE
-   */
+
 
   .container { max-width: 1140px; }
 
 
 
-  /** 
-   * HEADER
-   */
 
   .navbar,
   .navbar.active {
@@ -1027,15 +800,6 @@ body.active { overflow: hidden; }
 
 
 
-  /**
-   * STATS
-   */
 
-  .stats .grid-list {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-
-  .stats-item .span { --fs-1: 4.8rem; }
 
 }
