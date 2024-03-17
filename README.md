@@ -1,2 +1,2 @@
-# EcoEats
+# SustainAbite
 DevSoc 2024
