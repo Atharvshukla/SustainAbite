@@ -1,0 +1,182 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Alkara',sans-serif;
+    box-sizing:border-box;
+    
+}
+html{
+    scroll-behavior: smooth;
+    
+    
+}
+::-webkit-scrollbar {
+  width: 6px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #970101; /* Thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(81, 80, 80, 0.94);
+   
+}
+
+
+body {
+background-color: #131111;
+color: #fff;
+ overflow-x: hidden;  /** Prevents horizontal scroll-bar */
+height: 640px;
+
+}
+
+/* Specify a height for the map container */
+  #map {
+    width: 100%;
+    height: 720px; /* Adjust height as needed */
+  }
+  
+  /* Style for the floating buttons */
+  .btn{
+    /* position: fixed;
+    bottom: 20px; */
+    display: block;
+    margin: 50px auto;
+    width: fit-content;
+    border: 1px solid #58be6e;
+    padding: 14px 50px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #000000;
+    transition: background 0.7s;
+    position: absolute;
+    top: 440px;
+    left: 30px;
+    
+    font-weight: 800;
+    font-family: 'Dela Gothic One', cursive;
+    background-color: #dddddd5f;
+}
+.btn:hover{
+    background: #269937e0;
+
+    
+}
+.btn1{
+    /* position: fixed;
+    bottom: 10px; */
+    display: block;
+    margin: 50px auto;
+    width: fit-content;
+    border: 1px solid #58be6e;
+    padding: 14px 50px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #000000;
+    transition: background 0.7s;
+    position: absolute;
+    top: 500px;
+    left: 30px;
+    
+    font-weight: 800;
+    font-family: 'Dela Gothic One', cursive;
+    background-color: #dddddd5f;
+}
+.btn1:hover{
+    background: #269937e0;
+
+    
+}
+  .floating-button {
+    position: fixed;
+    bottom: 10px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .floating-button2 {
+    /* position: fixed; */
+    bottom: 20px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .show {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: rgba(0, 0, 0, 0.8);
+color: white;
+padding: 20px;
+border-radius: 10px;
+animation: fadeIn 0.5s ease-in forwards; /* Animation to fade in */
+}
+
+/* Keyframes for fading in */
+@keyframes fadeIn {
+0% { opacity: 0; }
+100% { opacity: 1; }
+}
+
+.fade-out {
+animation: fadeOut 0.5s ease-out forwards; /* Animation to fade out */
+}
+
+/* Keyframes for fading out */
+@keyframes fadeOut {
+0% { opacity: 1; }
+100% { opacity: 0; }
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #cac2c26f;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  #form-container {
+    height: 70vh;
+    width: 300px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* Ensure the form appears above the map */
+    background-color: rgba(255, 255, 255, 0.421);
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  #form-container1 {
+    width: 250px;
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    z-index: 1000; /* Ensure the form appears above the map */
+    background-color: rgba(255, 255, 255, 0.573);
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  /* .empty{}
+   */
