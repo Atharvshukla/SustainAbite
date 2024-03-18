@@ -4,7 +4,7 @@
   VARIABLES DECLARATION ON ROOT
 */
 :root {
-    --green: rgb(33, 250, 131);
+    --green:  hsl(90, 100%, 37%);
     --red: rgb(252, 86, 108);
     --dusky-green: rgb(6, 170, 94);
     --opac-white: rgba(255, 255, 255, .8);
