@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#06aa5e">
+    <meta name="msapplication-navbutton-color" content="#06aa5e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Sign up | SustainAbite ™</title>
+    <link rel="stylesheet" href="static/css/signup.css">
+    <!-- <script src="static/js/signup.js" defer></script> -->
+    
+</head>
+
+<body>
+    <main class="card-container slideUp-animation">
+        <div class="image-container">
+           
+            <img src="static/images/cook.svg" class="illustration" alt="">
+            <p class="quote">Provide your meal details here..!</p>
+            <a href="#btm" class="mobile-btm-nav">
+                <img src="static/images/dbl-arrow.png" alt="">
+            </a>
+        </div>
+        <form id="myForm"action="" method="">
+            <div class="form-container slideRight-animation" id="show">
+    
+                <h1 class="form-header">
+                    Meal Details
+                </h1>
+                <div id="btm">
+                  <button type="button" onclick="addb()">ADD MORE</button>
+
+              </div>
+              <div id="btm">
+                  <button type="submit" id="submitButton">SUBMIT</button>
+                  
+              </div>
+                <div class="input-container">
+                    <label for="name_item"></label>
+                    <input type="text" name="name_item[]" id="name_item" required>
+                    <span>
+                        Meal Name
+                    </span>
+                    <div class="error"></div>
+                </div>
+    
+                <div class="input-container">
+                    <label for="quantity"></label>
+                    <input type="number" name="quantity[]" id="quantity" required>
+                    <span>
+                        Quantity of meal
+                    </span>
+                    <div class="error"></div>
+                </div>
+    
+                <div class="input-container">
+                    <label for="expirydate">
+                    </label>
+                    <input type="date" name="expirydate[]" id="expirydate" required>
+                    <span>
+                        Expiry Date
+                    </span>
+                    <div class="error"></div>
+                </div>
+    
+                <div class="input-container">
+                    <label for="price">
+                    </label>
+                    <input type="number" name="price[]" id="price" required>
+                    <span>Price</span>
+                    <div class="error"></div>
+                </div>
+    
+                <div class="input-container">
+                    <label for="description"></label>
+                    <input type="text" name="description[]" id="description" required>
+                    <span>Description</span>
+                    <div class="error"></div>
+                </div>
+
+                <!-- <div class="input-container">
+                    <label for="user-password-confirm"></label>
+                    <input type="password" name="user-password-confirm" id="user-password-confirm" class="password-confirmation" required>
+                    <span>
+                        Confirm Password
+                    </span>
+                    <div class="error"></div>
+                </div> -->
+                
+
+                <!-- <div id="btm">
+                    <button type="submit" class="submit-btn">Create Account</button>
+                    <p class="btm-text">
+                        Already have an account..? <span class="btm-text-highlighted"> <a href="login.html"> Log in</a></span>
+                    </p>
+                </div> -->
+            </div>
+        </form>
+    </main>
+    <section class="outro-overlay disabled slideUp-animation">
+        <h1 class="company">SustainAbite<sup>&trade;</sup></h1>
+        <h1 class="outro-greeting">Thank's for signing up..!</h1>
+        <img src="static/images/shape.svg" alt="" class="shape">
+        <img src="static/images/signedUp.svg" alt="" id="signedUp-illustration" class="slideRight-animation">
+       
+    </section>
+    <script>
+        const form = document.getElementById("myForm");
+    const addButton = document.getElementById("addButton");
+    let counter = 1;
+    
+    function addb()  {
+   
+      document.getElementById("show").innerHTML+=`<div class="input-container">
+  <label for="name_item"></label><input type="text" name="name_item[]" id="name_item_${counter}" required><span>Meal Name</span><div class="error"></div></div>`
+
+
+
+
+      document.getElementById("show").innerHTML+=`<div class="input-container">
+                    <label for="quantity"></label>
+                    <input type="number" name="quantity[]" id="quantity_${counter}" required>
+                    <span>
+                        Quantity of meal
+                    </span>
+                    <div class="error"></div>
+                </div>`
+      
+
+      document.getElementById("show").innerHTML+=`<div class="input-container">
+                    <label for="expirydate">
+                    </label>
+                    <input type="date" name="expirydate[]" id="expirydate_${counter}" required>
+                    <span>
+                        Expiry Date
+                    </span>
+                    <div class="error"></div>
+                </div>`
+   
+      
+      document.getElementById("show").innerHTML+=`<div class="input-container">
+                    <label for="price">
+                    </label>
+                    <input type="number" name="price[]" id="price_${counter}" required>
+                    <span>Price</span>
+                    <div class="error"></div>
+                </div>
+    `
+
+      document.getElementById("show").innerHTML+=`<div class="input-container">
+                    <label for="description"></label>
+                    <input type="text" name="description[]" id="description_${counter}" required>
+                    <span>Description</span>
+                    <div class="error"></div>
+                </div>`
+    
+     
+      counter++;
+    };
+    var curr_lat
+    var curr_long
+    // Handle form submission (replace with your back-end logic):
+    form.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent default form submission
+      const formData = new FormData(form);
+      if (navigator.geolocation) {
+            // Call the getCurrentPosition method to get the current position
+            navigator.geolocation.getCurrentPosition(function(position) {
+              // Retrieve latitude and longitude from the position object
+              curr_lat = position.coords.latitude;
+              curr_long = position.coords.longitude;
+              
+              console.log(curr_long)
+              console.log(curr_lat)
+              fetch(`/submit_form?latitude=${curr_lat}&longitude=${curr_long}`, {
+        method: "POST", // Use POST for form submissions
+        body: formData
+        
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Something went wrong!");
+        }
+        return response.json(); // Assuming a JSON response from the server
+      })
+      .then(data => {
+        // Handle successful response from server
+        console.log("Data received:", data);
+        window.location.href="/food_sell";
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error("Error:", error);
+      });
+            }, function(error) {
+              // Handle errors
+              switch(error.code) {
+                case error.PERMISSION_DENIED:
+                  alert("User denied the request for Geolocation.");
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  alert("Location information is unavailable.");
+                  break;
+                case error.TIMEOUT:
+                  alert("The request to get user location timed out.");
+                  break;
+                case error.UNKNOWN_ERROR:
+                  alert("An unknown error occurred.");
+                  break;
+              }
+            });
+          } else {
+            // Geolocation is not supported by the browser
+            alert("Geolocation is not supported by this browser.");
+          }
+      // Send formData to your back-end using AJAX or Fetch
+      console.log(formData); // Example: Log the form data
+      
+    });
+    
+    
+    </script>
+</body>
+</html>

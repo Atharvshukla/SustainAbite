@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Map with Floating Buttons</title>
+  <!-- Include OpenLayers CSS -->
+  <link rel="stylesheet" href="https://openlayers.org/en/v6.13.0/css/ol.css" type="text/css">
+  <link rel="stylesheet" type="text/css" href="static/css/order.css">
+  <!-- Include OpenLayers JavaScript -->
+  <script src="https://openlayers.org/en/v6.13.0/build/ol.js"></script>
+<style>
+  #mapa{
+    color:white;
+    background-color: hsl(90, 100%, 37%);
+    padding:10px;
+    margin:5px;
+    border:0px solid black;
+    border-radius: 6px;
+  }
+</style>
+</head>
+<body>
+
+   
+    </head>
+    <body>
+    
+    <!-- Form container -->
+    <div id="form-container">
+      <form action="/lower" method="POST">
+        <label for="name" >NAME OF THE SELLER :</label>
+        <div class="empty" id="name_seller"></div><br><br>
+        <div id="form-container1">
+            <form action="/lower" method="POST">
+              
+              <label for="name">NAME:</label>
+              <div class="empty" id="name"></div><br><br><br><br>
+              
+          
+              <label for="quantity">QUANTITY:</label>
+              <div class="empty" id="quantity"></div><br><br><br><br>
+              
+              <label for="expiry">EXPIRY DAYS:</label>
+              <div class="empty" id="expirydate"></div><br><br><br><br>
+          
+              <label for="expiry">price:</label>
+              <div class="empty" id="price"></div><br><br><br><br>
+              <label for="expiry">DESCRIPTION:</label>
+              <div class="empty" id="description"></div><br><br><br><br>
+          
+          
+              <!-- <button type="submit">Submit</button> -->
+            </form>
+          </div>
+    
+       
+    
+        <!-- <button type="submit">Submit</button> -->
+      </form>
+    </div>
+    
+    
+  <!-- Create a div to hold the map -->
+  <div id="map">
+  </div>
+
+  <!-- Floating button to place pointer at current location -->
+  <div class="btn" onclick="placePointer()" >FIND ME</div>
+
+  <!-- Floating button to display all latitudes and longitudes -->
+  <div class="btn1" onclick="displayCoordinates()">SOURCE AND NGO</div>
+  <!-- <div class="btn2" onclick="displayCoordinatesngo()">Display NGO near me</div> -->
+  <div id="show"></div>
+  <script>
+    var map;
+    
+     // Array to store coordinates
+    // for (var i =0;i<coordinates.length;i++){
+    //   console.log("orint")
+    //   console.log(coordinates[i]);
+    // }
+    // console.log(coordinates)
+    // Initialize the map when the page is loaded
+    window.onload = function() {
+      var hov = document.getElementById('form-container');
+  hov.innerHTML=""
+      // Create a new OpenLayers map object
+      map = new ol.Map({
+        // Specify the target element for the map
+        target: 'map',
+        // Create layers for the map (in this case, a tile layer)
+        layers: [
+          new ol.layer.Tile({
+            // Specify the source for the tile layer (OpenStreetMap in this case)
+            source: new ol.source.OSM()
+          })
+        ],
+        // Specify initial view parameters (center and zoom level)
+        view: new ol.View({
+          center: ol.proj.fromLonLat([0, 0]), // Center map at the equator initially
+          zoom: 2 // Initial zoom level (0 = whole world, higher numbers = closer)
+        })
+      });
+    };
+    // var coordinates;
+    // Function to place a pointer at the current location
+    function getcoord(){
+
+  fetch('/locations')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received from server:', data);
+            // Process the received data
+            coordinates=data
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+    function placePointer() {
+      var hov = document.getElementById('form-container');
+  hov.innerHTML=""
+      map.getOverlays().clear();
+      // Check if geolocation is supported by the browser
+      if (navigator.geolocation) {
+        // Call the getCurrentPosition method to get the current position
+        navigator.geolocation.getCurrentPosition(function(position) {
+          // Retrieve latitude and longitude from the position object
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+          // Center map at the current location with extra zoom
+          map.getView().setCenter(ol.proj.fromLonLat([longitude, latitude]));
+          map.getView().setZoom(12); // Adjust zoom level as needed
+
+          // Create a pointer (marker) overlay at the current location
+          var pointerOverlay = new ol.Overlay({
+            // Specify the element to be used as the marker
+            element: document.createElement('div'),
+            // Position the marker at the current location
+            position: ol.proj.fromLonLat([longitude, latitude])
+          });
+
+          // Add the pointer overlay to the map
+          map.addOverlay(pointerOverlay);
+
+          // Set a pointer image for the marker
+          pointerOverlay.getElement().innerHTML = '<img src="https://www.freeiconspng.com/uploads/red-location-icon-map-png-4.png" style="width: 32px; height: 42px;">';
+          // <a href="https://www.freeiconspng.com/img/4225" title="Image from freeiconspng.com"><img src=
+          // Add coordinates to the array
+          // coordinates.push([longitude, latitude]);
+          
+        }, function(error) {
+          // Handle errors
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              alert("User denied the request for Geolocation.");
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("Location information is unavailable.");
+              break;
+            case error.TIMEOUT:
+              alert("The request to get user location timed out.");
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("An unknown error occurred.");
+              break;
+          }
+        });
+      } else {
+        // Geolocation is not supported by the browser
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+    function distance(lat1, lon1, lat2, lon2, unit = 'K') {
+  // Convert degrees to radians
+  const radlat1 = Math.PI * lat1 / 180;
+  const radlat2 = Math.PI * lat2 / 180;
+  const dLat = radlat2 - radlat1;
+  const dLon = (Math.PI * (lon2 - lon1)) / 180;
+
+  // Earth radius in kilometers (change to 3959 for miles)
+  const R = 6371;
+
+  // Haversine formula
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(radlat1) * Math.cos(radlat2) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  // Distance in kilometers
+  let distance = R * c;
+
+  // Convert to desired unit
+  if (unit === 'M') {
+    distance *= 0.621371; // convert to miles
+  } else if (unit === 'N') {
+    distance *= 0.539956; // convert to nautical miles
+  }
+
+  return distance;
+}
+
+
+
+function displayCoordinatesngo() {
+  
+  // Clear existing markers
+ 
+  var curr_lat=0;
+  var curr_long=0;
+  var coordinates= {{ itemngo | tojson | safe }};
+  
+  console.log(coordinates)
+  if (navigator.geolocation) {
+        // Call the getCurrentPosition method to get the current position
+        navigator.geolocation.getCurrentPosition(function(position) {
+          // Retrieve latitude and longitude from the position object
+          curr_lat = position.coords.latitude;
+          curr_long = position.coords.longitude;
+        }, function(error) {
+          // Handle errors
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              alert("User denied the request for Geolocation.");
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("Location information is unavailable.");
+              break;
+            case error.TIMEOUT:
+              alert("The request to get user location timed out.");
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("An unknown error occurred.");
+              break;
+          }
+        });
+      } else {
+        // Geolocation is not supported by the browser
+        alert("Geolocation is not supported by this browser.");
+      }
+
+  // Iterate over the coordinates array and add markers
+  coordinates.forEach(function(coord) {
+    
+
+      var latitude=coord.location[0];
+      var longitude=coord.location[1];
+      console.log(latitude)
+     // Extra information associated with the marker
+    
+    // console.log(distance(latitude,longitude,curr_lat,curr_long));
+    // console.log(curr_lat);
+    // Create a marker overlay for each coordinate
+    var markerOverlay = new ol.Overlay({
+      // Specify the element to be used as the marker
+      element: document.createElement('div'),
+      // Position the marker at the current coordinate
+      position: ol.proj.fromLonLat([longitude, latitude])
+    });
+
+    // Add the marker overlay to the map
+    map.addOverlay(markerOverlay);
+
+    // Set a marker image for the marker
+    markerOverlay.getElement().innerHTML = '<img src="https://www.freeiconspng.com/uploads/blue-location-icon-png-19.png" style="width: 32px; height: 32px;">';
+    // <a href="https://www.freeiconspng.com/img/4240" title="Image from freeiconspng.com"><img src="" width="350" alt="Blue Location Icon Png" /></a>
+    // Add click event listener to the marker
+    markerOverlay.getElement().addEventListener('click', function() {
+    // Get the position of the clicked marker
+    var position = markerOverlay.getPosition();
+    
+    // Zoom into the marker's position
+    map.getView().animate({
+        center: position,
+        zoom: 12, // Adjust the desired zoom level
+        duration: 1000 // Animation duration in milliseconds
+    });
+    
+    // Optionally, you can show a popup with additional information
+    var popup = new ol.Overlay({
+        element: document.createElement('div'),
+        positioning: 'bottom-center',
+        stopEvent: false
+    });
+    // console.log(info)
+    fadeInOutngo(coord); // Function to fade in and fade out the information
+
+    popup.setPosition(position);
+    map.addOverlay(popup);
+    // placePointer();
+    
+});
+
+  });
+}
+
+
+
+    function displayCoordinates() {
+  // Clear existing markers(
+  
+  map.getOverlays().clear();
+  placePointer();
+  displayCoordinatesngo()
+  var curr_lat=0;
+  var curr_long=0;
+  var coordinates= {{ item | tojson | safe }};
+  
+  console.log(coordinates)
+  if (navigator.geolocation) {
+        // Call the getCurrentPosition method to get the current position
+        navigator.geolocation.getCurrentPosition(function(position) {
+          // Retrieve latitude and longitude from the position object
+          curr_lat = position.coords.latitude;
+          curr_long = position.coords.longitude;
+        }, function(error) {
+          // Handle errors
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              alert("User denied the request for Geolocation.");
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("Location information is unavailable.");
+              break;
+            case error.TIMEOUT:
+              alert("The request to get user location timed out.");
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("An unknown error occurred.");
+              break;
+          }
+        });
+      } else {
+        // Geolocation is not supported by the browser
+        alert("Geolocation is not supported by this browser.");
+      }
+
+  // Iterate over the coordinates array and add markers
+  coordinates.forEach(function(coord) {
+    
+
+      var latitude=coord.location[0];
+      var longitude=coord.location[1];
+      console.log(latitude)
+     // Extra information associated with the marker
+    
+    // console.log(distance(latitude,longitude,curr_lat,curr_long));
+    // console.log(curr_lat);
+    // Create a marker overlay for each coordinate
+    var markerOverlay = new ol.Overlay({
+      // Specify the element to be used as the marker
+      element: document.createElement('div'),
+      // Position the marker at the current coordinate
+      position: ol.proj.fromLonLat([longitude, latitude])
+    });
+
+    // Add the marker overlay to the map
+    map.addOverlay(markerOverlay);
+
+    // Set a marker image for the marker
+    markerOverlay.getElement().innerHTML = '<img src="https://openlayers.org/en/latest/examples/data/icon.png" style="width: 32px; height: 32px;">';
+
+    // Add click event listener to the marker
+    markerOverlay.getElement().addEventListener('click', function() {
+    // Get the position of the clicked marker
+    var position = markerOverlay.getPosition();
+    
+    // Zoom into the marker's position
+    map.getView().animate({
+        center: position,
+        zoom: 12, // Adjust the desired zoom level
+        duration: 1000 // Animation duration in milliseconds
+    });
+    
+    // Optionally, you can show a popup with additional information
+    var popup = new ol.Overlay({
+        element: document.createElement('div'),
+        positioning: 'bottom-center',
+        stopEvent: false
+    });
+    // console.log(info)
+    fadeInOut(coord); // Function to fade in and fade out the information
+
+    popup.setPosition(position);
+    map.addOverlay(popup);
+    // placePointer();
+    
+});
+
+  });
+}
+
+function maps(lat,long){
+  var url = "https://www.google.com/maps?q=" + lat + "," + long;
+
+            // Open the URL in a new tab/window
+    window.open(url, '_blank');
+}
+
+function fadeInOutngo(info) {
+  var hov = document.getElementById('form-container');
+  hov.innerHTML=""
+  hov.innerHTML+=`<form action="/lower" id="frm" method="POST"><label for="name">NGO NAME:</label>${info.contactperson}<label for="name">CONTACT:</label>${info.phone}`
+    hov.innerHTML+=`<button id="mapa" onclick="maps(${info.location[0]},${info.location[1]})">OPEN  IN google maps</button>`
+    console.log("printed added")
+
+    hov.innerHTML+=`<div id="it"><label for="name">FOOD NEED:</label><div class="empty" id="dat">${info.foodneed}</div>`
+    
+  
+  
+  hov.innerHTML+="</form>"
+  
+    
+//   document.body.appendChild(hoveringBlock);
+
+   // Wait for 2 seconds before triggering the fade-out
+}
+
+
+function fadeInOut(info) {
+  var hov = document.getElementById('form-container');
+  hov.innerHTML=""
+  hov.innerHTML+=`<form action="/lower" id="frm" method="POST"><label for="name">NAME:</label>${info.userdata}<label for="name">CONTACT:</label>${info.number}`
+    hov.innerHTML+=`<button id="mapa" onclick="maps(${info.location[0]},${info.location[1]})">OPEN  IN google maps</button>`
+    console.log("printed added")
+  for (var i =0;i<info.items.length;i++){
+    hov.innerHTML+=`<div id="it"><label for="name">ITEM NAME:</label><div class="empty" id="dat">${info.items[i].itemname}</div><br><label for="quantity">QUANTITY:</label><div class="empty" id="dat">${info.items[i].quantity}</div><br><label for="expiry">EXPIRY DAYS:</label><div class="empty" id="dat">${info.items[i].expirydate}</div><br><label for="expiry">price:</label><div class="empty" id="dat">${info.items[i].price}</div><br><label for="expiry">DESCRIPTION:</label><div class="empty" id="dat">${info.items[i].description}</div><br></div>`
+    
+  }
+  
+  hov.innerHTML+="</form>"
+  
+    
+//   document.body.appendChild(hoveringBlock);
+
+   // Wait for 2 seconds before triggering the fade-out
+}
+  </script>
+  <style>
+    #dat{
+      color:black;
+    }
+  </style>
+</body>
+</html>

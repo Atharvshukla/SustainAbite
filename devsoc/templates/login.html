@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#06aa5e">
+    <meta name="msapplication-navbutton-color" content="#06aa5e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Sign up | SustainAbite ™</title>
+    <link rel="stylesheet" href="static/css/signup.css">
+    <script src="static/js/signup.js" defer></script>
+</head>
+<body>
+    <main class="card-container slideUp-animation">
+        <div class="image-container">
+           
+            <img src="static/images/signUp.svg" class="illustration" alt="">
+            <p class="quote">Welcome Back..!</p>
+            <a href="#btm" class="mobile-btm-nav">
+                <img src="static/images/dbl-arrow.png" alt="">
+            </a>
+        </div>
+        <form action="" id="myForm" method="POST">
+            <div class="form-container slideRight-animation">
+    
+                <h1 class="form-header">
+                    Welcome Back
+                </h1>
+    
+               
+    
+                <div class="input-container">
+                    <label for="mail">
+                    </label>
+                    <input type="email" name="mail" id="mail" required>
+                    <span>
+                        E-mail
+                    </span>
+                    <div class="error"></div>
+                </div>
+    
+
+    
+                <div class="input-container">
+                    <label for="userpassword"></label>
+                    <input type="password" name="userpassword" id="user-password" class="user-password" required>
+                    <span>Password</span>
+                    <div class="error"></div>
+                </div>
+
+
+
+                <div id="btm">
+                    <button type="submit" class="submit-btn">Login</button>
+                    <p class="btm-text">
+                        Don't have an account..? <span class="btm-text-highlighted"><a href="/signup">SignUp</a> </span>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </main>
+    <script>
+        const form = document.getElementById("myForm");
+        form.addEventListener("submit", (event) => {
+  event.preventDefault(); // Prevent default form submission
+  const formData = new FormData(form);
+  
+          fetch(`/login`, {
+    method: "POST", // Use POST for form submissions
+    body: formData
+    
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Something went wrong!");
+    }
+    return response.json(); // Assuming a JSON response from the server
+  })
+  .then(data => {
+    // Handle successful response from server
+    console.log("Data received:", data);
+    window.location.href="/";
+  })
+  .catch(error => {
+    // Handle any errors
+    console.error("Error:", error);
+  });
+  window.location.href="/"
+        });
+  
+    </script>
+    <section class="outro-overlay disabled slideUp-animation">
+        <h1 class="company">SustainAbite <sup>&trade;</sup></h1>
+        <h1 class="outro-greeting">Thank's for signing up..!</h1>
+        <img src="static/images/shape.svg" alt="" class="shape">
+        <img src="static/images/signedUp.svg" alt="" id="signedUp-illustration" class="slideRight-animation">
+        
+    </section>
+</body>
+</html>
