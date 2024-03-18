@@ -48,14 +48,14 @@
   </div>
 
   <!-- Floating button to place pointer at current location -->
-  <div class="btn" onclick="placePointer()">Place Pointer Here</div>
+  <div class="btn" onclick="placePointer()">Current location</div>
 
   <!-- Floating button to display all latitudes and longitudes -->
   <div class="btn1" onclick="displayCoordinates()">Display Coordinates</div>
   <div id="show"></div>
   <script>
     var map;
-    var coordinates = [[12.9692,79.1559,'home'],[10,20,'office']]; // Array to store coordinates
+    var coordinates = [[12.92,79.1559,'home'],[12.9684,79.2,'office']]; // Array to store coordinates
 
     // Initialize the map when the page is loaded
     window.onload = function() {
@@ -80,6 +80,7 @@
 
     // Function to place a pointer at the current location
     function placePointer() {
+      map.getOverlays().clear();
       // Check if geolocation is supported by the browser
       if (navigator.geolocation) {
         // Call the getCurrentPosition method to get the current position
@@ -165,9 +166,7 @@
   placePointer();
   var curr_lat=0;
   var curr_long=0;
-  // Iterate over the coordinates array and add markers
-  coordinates.forEach(function(coord) {
-    if (navigator.geolocation) {
+  if (navigator.geolocation) {
         // Call the getCurrentPosition method to get the current position
         navigator.geolocation.getCurrentPosition(function(position) {
           // Retrieve latitude and longitude from the position object
@@ -195,6 +194,9 @@
         alert("Geolocation is not supported by this browser.");
       }
 
+  // Iterate over the coordinates array and add markers
+  coordinates.forEach(function(coord) {
+    
 
       var latitude=coord[0];
       var longitude=coord[1];
